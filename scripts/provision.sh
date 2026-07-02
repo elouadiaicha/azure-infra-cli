@@ -119,4 +119,23 @@ az network vnet subnet list \
   --output table
 
 echo ""
+echo ""
+echo "Création de la NIC de test..."
+
+az network nic create \
+  --name "nic-test-${OWNER}-cli" \
+  --resource-group "$RG" \
+  --location "$LOCATION" \
+  --vnet-name "$VNET_NAME" \
+  --subnet "subnet-frontend" \
+  --tags $TAGS
+
+echo ""
+echo "Affichage des règles NSG effectives..."
+
+az network nic list-effective-nsg \
+  --name "nic-test-${OWNER}-cli" \
+  --resource-group "$RG" \
+  --query "effectiveNetworkSecurityGroups[0].effectiveSecurityRules[].{Nom:name, Priorite:priority, Direction:direction, Action:access, Port:destinationPortRanges}" \
+  --output table
 echo "Provisionnement terminé."

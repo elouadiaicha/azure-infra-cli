@@ -177,12 +177,13 @@ az storage blob list \
   --output table
 
 echo ""
-echo "Options de redondance disponibles à France Central..."
+echo "Options de redondance principales pour un Storage Account :"
 
-az storage account list-skus \
-  --location "$LOCATION" \
-  --query "[].{SKU:name, Type:tier}" \
-  --output table
+echo "Standard_LRS  - Redondance locale"
+echo "Standard_ZRS  - Redondance par zones"
+echo "Standard_GRS  - Redondance géographique"
+echo "Standard_GZRS - Redondance géographique + zones"
+echo "Premium_LRS   - Premium avec redondance locale"
 
 echo ""
 echo "TP Stockage terminé."

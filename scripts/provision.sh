@@ -165,11 +165,19 @@ az network nic create \
 echo ""
 echo "Affichage des règles NSG effectives..."
 
-az network nic list-effective-nsg \
+echo ""
+echo "Affichage des règles NSG effectives..."
+
+if az network nic list-effective-nsg \
   --name "$NIC_NAME" \
   --resource-group "$RG" \
   --query "effectiveNetworkSecurityGroups[0].effectiveSecurityRules[].{Nom:name, Priorite:priority, Direction:direction, Action:access, Port:destinationPortRanges}" \
-  --output table || echo "Impossible d'afficher les règles effectives : la NIC doit être attachée à une VM démarrée."
+  --output table; then
+  echo "Règles effectives affichées."
+else
+  echo "Impossible d'afficher les règles effectives : la NIC doit être attachée à une VM démarrée."
+  echo "Ce comportement est attendu dans ce TP car nous créons seulement une NIC de test, sans VM."
+fi
 
 echo ""
 echo "Provisionnement terminé."

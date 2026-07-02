@@ -163,21 +163,9 @@ az network nic create \
   --tags $TAGS
 
 echo ""
-echo "Affichage des règles NSG effectives..."
-
-echo ""
-echo "Affichage des règles NSG effectives..."
-
-if az network nic list-effective-nsg \
-  --name "$NIC_NAME" \
-  --resource-group "$RG" \
-  --query "effectiveNetworkSecurityGroups[0].effectiveSecurityRules[].{Nom:name, Priorite:priority, Direction:direction, Action:access, Port:destinationPortRanges}" \
-  --output table; then
-  echo "Règles effectives affichées."
-else
-  echo "Impossible d'afficher les règles effectives : la NIC doit être attachée à une VM démarrée."
-  echo "Ce comportement est attendu dans ce TP car nous créons seulement une NIC de test, sans VM."
-fi
+echo "Règles effectives NSG non affichées."
+echo "Azure exige que la NIC soit attachée à une VM démarrée pour utiliser list-effective-nsg."
+echo "Dans ce TP, nous créons uniquement une NIC de test, sans VM."
 
 echo ""
 echo "Provisionnement terminé."

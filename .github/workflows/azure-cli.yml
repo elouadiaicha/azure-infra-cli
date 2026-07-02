@@ -18,6 +18,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check secrets
+        run: |
+          test -n "${{ secrets.AZURE_CLIENT_ID }}" && echo "CLIENT_ID OK" || echo "CLIENT_ID MISSING"
+          test -n "${{ secrets.AZURE_TENANT_ID }}" && echo "TENANT_ID OK" || echo "TENANT_ID MISSING"
+          test -n "${{ secrets.AZURE_SUBSCRIPTION_ID }}" && echo "SUBSCRIPTION_ID OK" || echo "SUBSCRIPTION_ID MISSING"
+
       - name: Login Azure
         uses: azure/login@v2
         with:
